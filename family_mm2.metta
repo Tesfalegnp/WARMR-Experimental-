@@ -1,9 +1,6 @@
-; Family relationships.
-(parent abel hana)
-(parent hana sami)
-(parent hana lidiya)
-(parent bereket sara)
-(parent sara noah)
+;; TEST-AUX data.metta
+;;;; mork run family_mm2.metta --aux-path data.metta 
+
 
 ; Join two parent relationships to derive complete substitutions and keys.
 (exec (freq f001 to_drive_three_chain_relational_pattern)
@@ -23,7 +20,7 @@
    (O (count (distinct_ancestor_key_count $count) $count $ancestor)))
 
 
-   
+
 ;;;;;Cleanup facts from results.
 (exec (freq f004 Cleanup_Facts_from_Results)
    (, (parent $X $Y))
