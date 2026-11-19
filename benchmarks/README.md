@@ -1,7 +1,7 @@
 # Shared Benchmark: ugly-sodaDrinker
 
 
-## 2. Key Domain Adapter for WARMR
+## 1. Key Domain Adapter for WARMR
 
 WARMR evaluates frequent relational queries over a designated **key predicate** (e.g. `positive_example/1`). Support in WARMR is defined as the number of distinct key entities that satisfy the query body.
 
@@ -13,7 +13,7 @@ To enable direct, apples-to-apples comparison on this shared dataset without mod
 - The dataset file `benchmarks/ugly-sodaDrinker.metta` is restored to exact byte-for-byte identity with the upstream repository (`SHA256: 3b8b322...`, exactly 60 original facts, zero extra lines).
 - This guarantees full provenance and byte-level fidelity while allowing WARMR to bind its key domain cleanly via the adapter.
 
-## 4. Ground Truth Support Table
+## 2. Ground Truth Support Table
 
 | Candidate Query | Form | Expected Distinct-Key Support | Relative Support ($N=20$) |
 | :--- | :--- | ---:| ---:|
@@ -40,7 +40,7 @@ To enable direct, apples-to-apples comparison on this shared dataset without mod
 
 Note: `Inheritance(A, man) ∧ Inheritance(A, woman)` has absolute support **0** and is pruned by anti-monotonic search, preventing all 4 Level 3 candidates containing both `man` and `woman` from being generated.
 
-## 5. Execution Instructions
+## 3. Execution Instructions
 
 Run WARMR on the MM2 benchmark dataset:
 ```bash
