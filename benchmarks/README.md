@@ -1,13 +1,5 @@
 # Shared Benchmark: ugly-sodaDrinker
 
-## 1. Provenance and Metadata
-
-- **Upstream Repository:** `https://github.com/iCog-Labs-Dev/Pattern-miner-mm2.git`
-- **Origin Fork:** `https://github.com/Tesfalegnp/Pattern-miner-mm2.git`
-- **Inspected Commit:** `3d97dc45aaf37c47be99485e1cb53a449da11140`
-- **Source File:** `data/ugly-sodaDrinker.metta`
-- **SHA256 Checksum:** `3b8b32224004667108e4560001c78861faf833ddb498f7b6a62f92aaecc223b8`
-- **Dataset Structure:** 60 relational `(Inheritance <Person> <Attribute>)` facts covering 20 individuals and 5 attributes.
 
 ## 2. Key Domain Adapter for WARMR
 
@@ -20,25 +12,6 @@ To enable direct, apples-to-apples comparison on this shared dataset without mod
 - In Milestone 6, these 20 adapter facts are stored in `benchmarks/ugly-sodaDrinker-keys.metta`.
 - The dataset file `benchmarks/ugly-sodaDrinker.metta` is restored to exact byte-for-byte identity with the upstream repository (`SHA256: 3b8b322...`, exactly 60 original facts, zero extra lines).
 - This guarantees full provenance and byte-level fidelity while allowing WARMR to bind its key domain cleanly via the adapter.
-
-## 3. Investigation of Historical Count Discrepancy (19 vs 20)
-
-Earlier research notes and Pattern Miner MM2 test fixtures recorded 19 individuals for `human` rather than 20.
-
-Git commit inspection of the source repository revealed the exact root cause:
-- **Commit:** `1ecafb81ab6b7ef4516c8616c52823116b00226b`
-- **Author:** Eyerusalem Hailemariam
-- **Commit Message:** `Update data/ugly-sodaDrinker.metta: Add missing Allen human classification`
-- **Diff:** Added `(Inheritance Allen human)` to the dataset.
-
-Prior to commit `1ecafb8`, `Allen` possessed `(Inheritance Allen man)`, `ugly`, and `sodaDrinker`, but was missing `human`. Following the commit, all 20 individuals possess the `human` attribute.
-
-Therefore, the ground truth verified against the actual repository file (`3b8b322...`) is:
-- `Inheritance(A, human)`: **20**
-- `human(A), man(A)`: **10**
-- `human(A), woman(A)`: **10**
-- `human(A), ugly(A)`: **10**
-- `human(A), sodaDrinker(A)`: **10**
 
 ## 4. Ground Truth Support Table
 
