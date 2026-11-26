@@ -113,7 +113,7 @@ while [[ $# -gt 0 ]]; do
       MIN_SUPPORT="$2"
       shift 2
       ;;
-    --max-length)
+    --max-length|--max-depth)
       MAX_LENGTH="$2"
       shift 2
       ;;
@@ -196,6 +196,7 @@ echo "--------------------------------------------------------------------------
 # Execute MORK pipeline
 RAW_OUTPUT="$("$MORK_BIN" run \
   --aux-path "$WORKSPACE_ROOT/src/language-bias.metta" \
+  --aux-path "$WORKSPACE_ROOT/src/canonicalize.metta" \
   --aux-path "$WORKSPACE_ROOT/src/support-calc.metta" \
   --aux-path "$WORKSPACE_ROOT/src/warmr.metta" \
   --aux-path "$WORKSPACE_ROOT/src/pruning.metta" \
