@@ -38,6 +38,7 @@
 ;; -----------------------------------------------------------------------------
 ;; When key predicate mode is compiled at Stage 110, automatically trigger key
 ;; domain counting and initialize the root candidate Q0.
+
 (exec (warmr 150 init_warmr_pipeline)
   (, (valid_modeh $kpred ((+ $ktype))))
   (O (+ (key_domain_pending_count))
@@ -45,9 +46,9 @@
      (+ (expand_candidate root))))
 
 ;; -----------------------------------------------------------------------------
-;; STAGE 215–216: Level 1 Refinement Operator rho(Q0)
+;; STAGE 215–219: Level 1 Refinement Operator rho(Q0)
 ;; -----------------------------------------------------------------------------
-;; Mode 1A: Body literal with constant slot (# ctype)
+;; Mode 1A: Binary predicate with constant slot (# ctype)
 (exec (warmr 215 ref_root_const_bfs)
   (, (expand_candidate root)
      (candidate root 0 () (((var 0) $ptype)) nil)
@@ -57,7 +58,7 @@
      (+ (candidate_pending_eval (cand_l1 $c)))
      (+ (candidate_pool 1 (($pred (var 0) (const $c)))))))
 
-;; Mode 1B: Body literal with output variable slot (- otype)
+;; Mode 1B: Binary predicate with output variable slot (- otype)
 (exec (warmr 216 ref_root_var_bfs)
   (, (expand_candidate root)
      (candidate root 0 () (((var 0) $ktype)) nil)
@@ -66,7 +67,7 @@
      (+ (candidate_pending_eval (cand_l1 $pred var1)))
      (+ (candidate_pool 1 (($pred (var 0) (var 1)))))))
 
-;; Mode 1C: Body literal with unary predicate (+ ktype)
+;; Mode 1C: Unary predicate (+ ktype)
 (exec (warmr 217 ref_root_unary_bfs)
   (, (expand_candidate root)
      (candidate root 0 () (((var 0) $ktype)) nil)
@@ -75,17 +76,39 @@
      (+ (candidate_pending_eval (cand_l1 $pred)))
      (+ (candidate_pool 1 (($pred (var 0)))))))
 
+;; Mode 1D: Ternary predicate (+ ktype, - otype, # ctype)
+(exec (warmr 218 ref_root_ternary_var_const_bfs)
+  (, (expand_candidate root)
+     (candidate root 0 () (((var 0) $ktype)) nil)
+     (allowed_body_predicate positive_example $pred ((+ $ktype) (- $otype) (# $ctype)))
+     (valid_constant $ctype $c))
+  (O (+ (candidate (cand_l1 $pred $c) 1 (($pred (var 0) (var 1) (const $c))) (((var 0) $ktype) ((var 1) $otype)) root))
+     (+ (candidate_pending_eval (cand_l1 $pred $c)))
+     (+ (candidate_pool 1 (($pred (var 0) (var 1) (const $c)))))))
+
+;; Mode 1E: 4-Ary predicate (+ ktype, # c1, # c2, # c3)
+(exec (warmr 219 ref_root_4ary_const3_bfs)
+  (, (expand_candidate root)
+     (candidate root 0 () (((var 0) $ktype)) nil)
+     (allowed_body_predicate positive_example $pred ((+ $ktype) (# $t1) (# $t2) (# $t3)))
+     (valid_constant $t1 $c1)
+     (valid_constant $t2 $c2)
+     (valid_constant $t3 $c3))
+  (O (+ (candidate (cand_l1 $pred $c1 $c2 $c3) 1 (($pred (var 0) (const $c1) (const $c2) (const $c3))) (((var 0) $ktype)) root))
+     (+ (candidate_pending_eval (cand_l1 $pred $c1 $c2 $c3)))
+     (+ (candidate_pool 1 (($pred (var 0) (const $c1) (const $c2) (const $c3)))))))
+
 ;; -----------------------------------------------------------------------------
-;; STAGE 220–222: Level 1 Evaluation
+;; STAGE 220–224: Level 1 Evaluation
 ;; -----------------------------------------------------------------------------
-;; Case 1: Constant slot
+;; Case 1: Constant slot (binary)
 (exec (warmr 220 eval_l1_const_bfs)
   (, (candidate $qid 1 (($p (var 0) (const $c))) $types root)
      (positive_example $k)
      ($p $k $c))
   (O (+ (key_witness $qid $k))))
 
-;; Case 2: Output variable slot
+;; Case 2: Output variable slot (binary)
 (exec (warmr 221 eval_l1_var_bfs)
   (, (candidate $qid 1 (($p (var 0) (var 1))) $types root)
      (positive_example $k)
@@ -97,6 +120,20 @@
   (, (candidate $qid 1 (($p (var 0))) $types root)
      (positive_example $k)
      ($p $k))
+  (O (+ (key_witness $qid $k))))
+
+;; Case 4: Ternary predicate (+ ktype, - otype, # ctype)
+(exec (warmr 223 eval_l1_ternary_var_const_bfs)
+  (, (candidate $qid 1 (($p (var 0) (var 1) (const $c))) $types root)
+     (positive_example $k)
+     ($p $k $v $c))
+  (O (+ (key_witness $qid $k))))
+
+;; Case 5: 4-Ary predicate (+ ktype, # c1, # c2, # c3)
+(exec (warmr 224 eval_l1_4ary_const3_bfs)
+  (, (candidate $qid 1 (($p (var 0) (const $c1) (const $c2) (const $c3))) $types root)
+     (positive_example $k)
+     ($p $k $c1 $c2 $c3))
   (O (+ (key_witness $qid $k))))
 
 ;; -----------------------------------------------------------------------------
