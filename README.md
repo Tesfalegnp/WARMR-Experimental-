@@ -194,15 +194,13 @@ warmr-experiment/
 │   ├── deep-chain-bias.metta      # Bias for deep chains
 │   └── family-bias.metta          # Bias for family relationships
 ├── docs/                    # In-depth architectural & algorithmic documentation
-│   ├── warmr-fundamentals.md      # Beginner guide, mathematics & formulas
-│   ├── warmr-algorithm.md         # Full algorithm specification & pseudocode
-│   ├── worked-example.md          # Concrete substitution & deduplication trace
-│   ├── pattern-miner-mm2-comparison.md # 25-dimension MM2 vs WARMR matrix
-│   ├── recommendations-for-mm2.md # Concrete improvement proposals for MM2
-│   ├── verification-and-reproducibility.md # Environment, checksums & CLI guide
+│   ├── algorithm.md               # Algorithmic foundations, pseudocode, support & pruning
 │   ├── architecture.md            # MORK staged pipeline & PathMap priorities
 │   ├── benchmarks.md              # Detailed benchmark dataset reference
-│   └── limitations.md             # System boundaries & verified scope
+│   ├── limitations.md             # System boundaries & verified scope
+│   ├── pattern-miner-mm2-comparison.md # 25-dimension MM2 vs WARMR matrix & recommendations
+│   ├── verification-and-reproducibility.md # Environment, checksums & CLI guide
+│   └── worked-example.md          # Concrete substitution & deduplication trace
 ├── reports/                 # Milestone release audit reports
 ├── scripts/                 # Hardened CLI runners
 │   ├── run-warmr.sh               # Command-line miner runner
