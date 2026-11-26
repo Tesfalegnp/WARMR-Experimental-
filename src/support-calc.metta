@@ -296,6 +296,87 @@
   (O (+ (key_witness $qid $key))))
 
 ;; -----------------------------------------------------------------------------
+;; STAGE 319d: Deep Conjunctions (Lengths 6, 7, 8)
+;; -----------------------------------------------------------------------------
+;; Level 6: 6-hop Relational Chain
+(exec (warmr 319 eval_l6_chain)
+  (, (candidate $qid 6 (($p1 (var 0) (var 1)) ($p2 (var 1) (var 2)) ($p3 (var 2) (var 3)) ($p4 (var 3) (var 4)) ($p5 (var 4) (var 5)) ($p6 (var 5) (var 6))) $types $parent)
+     (positive_example $key)
+     ($p1 $key $v1)
+     ($p2 $v1 $v2)
+     ($p3 $v2 $v3)
+     ($p4 $v3 $v4)
+     ($p5 $v4 $v5)
+     ($p6 $v5 $v6))
+  (O (+ (key_witness $qid $key))))
+
+;; Level 6: 6-literal Branched Constants
+(exec (warmr 319 eval_l6_branched_const)
+  (, (candidate $qid 6 (($p1 (var 0) (const $c1)) ($p2 (var 0) (const $c2)) ($p3 (var 0) (const $c3)) ($p4 (var 0) (const $c4)) ($p5 (var 0) (const $c5)) ($p6 (var 0) (const $c6))) $types $parent)
+     (positive_example $key)
+     ($p1 $key $c1)
+     ($p2 $key $c2)
+     ($p3 $key $c3)
+     ($p4 $key $c4)
+     ($p5 $key $c5)
+     ($p6 $key $c6))
+  (O (+ (key_witness $qid $key))))
+
+;; Level 7: 7-hop Relational Chain
+(exec (warmr 319 eval_l7_chain)
+  (, (candidate $qid 7 (($p1 (var 0) (var 1)) ($p2 (var 1) (var 2)) ($p3 (var 2) (var 3)) ($p4 (var 3) (var 4)) ($p5 (var 4) (var 5)) ($p6 (var 5) (var 6)) ($p7 (var 6) (var 7))) $types $parent)
+     (positive_example $key)
+     ($p1 $key $v1)
+     ($p2 $v1 $v2)
+     ($p3 $v2 $v3)
+     ($p4 $v3 $v4)
+     ($p5 $v4 $v5)
+     ($p6 $v5 $v6)
+     ($p7 $v6 $v7))
+  (O (+ (key_witness $qid $key))))
+
+;; Level 7: 7-literal Branched Constants
+(exec (warmr 319 eval_l7_branched_const)
+  (, (candidate $qid 7 (($p1 (var 0) (const $c1)) ($p2 (var 0) (const $c2)) ($p3 (var 0) (const $c3)) ($p4 (var 0) (const $c4)) ($p5 (var 0) (const $c5)) ($p6 (var 0) (const $c6)) ($p7 (var 0) (const $c7))) $types $parent)
+     (positive_example $key)
+     ($p1 $key $c1)
+     ($p2 $key $c2)
+     ($p3 $key $c3)
+     ($p4 $key $c4)
+     ($p5 $key $c5)
+     ($p6 $key $c6)
+     ($p7 $key $c7))
+  (O (+ (key_witness $qid $key))))
+
+;; Level 8: 8-hop Relational Chain
+(exec (warmr 319 eval_l8_chain)
+  (, (candidate $qid 8 (($p1 (var 0) (var 1)) ($p2 (var 1) (var 2)) ($p3 (var 2) (var 3)) ($p4 (var 3) (var 4)) ($p5 (var 4) (var 5)) ($p6 (var 5) (var 6)) ($p7 (var 6) (var 7)) ($p8 (var 7) (var 8))) $types $parent)
+     (positive_example $key)
+     ($p1 $key $v1)
+     ($p2 $v1 $v2)
+     ($p3 $v2 $v3)
+     ($p4 $v3 $v4)
+     ($p5 $v4 $v5)
+     ($p6 $v5 $v6)
+     ($p7 $v6 $v7)
+     ($p8 $v7 $v8))
+  (O (+ (key_witness $qid $key))))
+
+;; Level 8: 8-literal Branched Constants
+(exec (warmr 319 eval_l8_branched_const)
+  (, (candidate $qid 8 (($p1 (var 0) (const $c1)) ($p2 (var 0) (const $c2)) ($p3 (var 0) (const $c3)) ($p4 (var 0) (const $c4)) ($p5 (var 0) (const $c5)) ($p6 (var 0) (const $c6)) ($p7 (var 0) (const $c7)) ($p8 (var 0) (const $c8))) $types $parent)
+     (positive_example $key)
+     ($p1 $key $c1)
+     ($p2 $key $c2)
+     ($p3 $key $c3)
+     ($p4 $key $c4)
+     ($p5 $key $c5)
+     ($p6 $key $c6)
+     ($p7 $key $c7)
+     ($p8 $key $c8))
+  (O (+ (key_witness $qid $key))))
+
+;; -----------------------------------------------------------------------------
 ;; STAGE 320: Distinct Key Witness Counting
 ;; -----------------------------------------------------------------------------
 ;; Counts unique (key_witness $qid $key) facts stored in the AtomSpace.
