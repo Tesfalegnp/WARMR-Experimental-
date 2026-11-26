@@ -40,6 +40,28 @@
 (valid_constant pathway metabolism)
 (valid_constant pathway respiration)
 
+;; Unary, Ternary, and 4-Ary Multi-Arity Bias
+(allowed_body_predicate positive_example active ((+ gene)))
+(predicate_arity active 1)
+(valid_slot active 1 input gene)
+
+(allowed_body_predicate positive_example transfer ((+ gene) (- gene) (# bank)))
+(predicate_arity transfer 3)
+(valid_slot transfer 1 input gene)
+(valid_slot transfer 2 output gene)
+(valid_slot transfer 3 constant bank)
+(valid_constant bank chase)
+
+(allowed_body_predicate positive_example audit_log ((+ gene) (# action) (# device) (# status)))
+(predicate_arity audit_log 4)
+(valid_slot audit_log 1 input gene)
+(valid_slot audit_log 2 constant action)
+(valid_slot audit_log 3 constant device)
+(valid_slot audit_log 4 constant status)
+(valid_constant action login)
+(valid_constant device mobile)
+(valid_constant status success)
+
 ;; Shared MM2 Benchmark Bias
 (allowed_body_predicate positive_example Inheritance ((+ person) (# attribute)))
 (predicate_arity Inheritance 2)
@@ -151,3 +173,13 @@
 (EXPECTED-RESULT err-conn (candidate_error disconnected_candidate bad_conn (var 99)))
 (EXPECTED-RESULT ok-l1 (valid_candidate good_l1))
 (EXPECTED-RESULT ok-l2 (valid_candidate good_l2))
+
+;; Part C: Multi-Arity Refinements (Unary, Ternary, 4-Ary)
+;; Unary Refinement
+(EXPECTED-RESULT gen-unary-active (canonical_candidate (cand_l1 active) 1 ((active (var 0))) (((var 0) gene)) root_gene))
+
+;; Ternary Refinement with Mixed Var and Constant Slots
+(EXPECTED-RESULT gen-ternary-transfer (canonical_candidate (cand_l1 transfer chase) 1 ((transfer (var 0) (var 1) (const chase))) (((var 0) gene) ((var 1) gene)) root_gene))
+
+;; 4-Ary Refinement with Grounded Constants
+(EXPECTED-RESULT gen-4ary-audit (canonical_candidate (cand_l1 audit_log login mobile success) 1 ((audit_log (var 0) (const login) (const mobile) (const success))) (((var 0) gene)) root_gene))
