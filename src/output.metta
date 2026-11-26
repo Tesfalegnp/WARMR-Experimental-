@@ -34,7 +34,7 @@
 ;; -----------------------------------------------------------------------------
 ;; STAGE 560: Emit Standardized Frequent Pattern Record
 ;; -----------------------------------------------------------------------------
-(exec (warmr 560 emit_warmr_pattern)
+(exec (warmr 700 emit_warmr_pattern)
   (, (candidate_frequent $cid $count)
      (candidate $cid $len $body $types $parent)
      (total_positive_keys $tot)
