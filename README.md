@@ -1,6 +1,6 @@
 # WARMR: Independent Relational Pattern Miner in MeTTa/MM2 on MORK
 
-[![MORK Test Suite](https://img.shields.io/badge/tests-19%20suites%20%7C%20270%20passed-brightgreen)](#11-testing-and-verification)
+[![MORK Test Suite](https://img.shields.io/badge/tests-23%20suites%20%7C%20369%20passed-brightgreen)](#11-testing-and-verification)
 [![Language](https://img.shields.io/badge/language-MeTTa%20%2F%20MM2-blue)](#8-architecture-and-project-structure)
 [![Engine](https://img.shields.io/badge/engine-MORK%20(Rust)-orange)](#9-installation-and-execution)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -217,7 +217,7 @@ warmr-experiment/
 │   ├── search-loop.metta          # Level-wise BFS search driver
 │   ├── warmr.metta                # Top-level pipeline coordinator
 │   └── output.metta               # Standardized pattern record formatter
-├── tests/                   # 19 automated test suites (270 assertions)
+├── tests/                   # 23 automated test suites (369 assertions)
 └── README.md                # Project documentation
 ```
 
@@ -228,7 +228,7 @@ warmr-experiment/
 ### Requirements
 - Linux (x86_64)
 - Bash 4.4+
-- Compiled MORK binary (`mork`)
+- Compiled MORK binary (`mork` or `bin/mork`)
 
 ### Running the Miner via CLI
 ```bash
@@ -239,6 +239,14 @@ warmr-experiment/
   --bias config/mm2-bias.metta \
   --min-support 2 \
   --max-length 3
+
+# Deep Relational Chain (Depths 1-8)
+./scripts/run-warmr.sh \
+  --dataset benchmarks/deep-chain-8.metta \
+  --keys benchmarks/deep-chain-keys.metta \
+  --bias config/deep-chain-bias.metta \
+  --min-support 1 \
+  --max-depth 8
 ```
 
 ---
@@ -250,7 +258,7 @@ Configured at runtime via CLI arguments:
 - `--keys <path>`: Positive example key individuals (`.metta`).
 - `--bias <path>`: Language-bias mode declarations (`.metta`).
 - `--min-support <int>`: Minimum absolute key support threshold ($\ge 0$).
-- `--max-length <int>`: Maximum query length to explore ($\ge 1$).
+- `--max-length <int>` or `--max-depth <int>`: Maximum query length to explore ($\ge 1$).
 
 ---
 
@@ -258,17 +266,26 @@ Configured at runtime via CLI arguments:
 
 Execute the complete regression and generalization test suite:
 ```bash
-./scripts/run-tests.sh
+MORK_BIN=bin/mork ./scripts/run-tests.sh
 ```
 
-**Status:** **19 / 19 test suites passed** with **270 / 270 passing assertions (100%)** in ~980 ms.
+Execute the automated production CLI end-to-end regression across all 6 benchmarks:
+```bash
+MORK_BIN=bin/mork ./scripts/test-cli-e2e.sh
+```
+
+**Status:** **23 / 23 test suites passed** with **369 / 369 passing assertions (100%)** in ~1.5 s.
 
 | Test Suite | Assertions | Status |
 |---|:---:|:---:|
-| `tests/bias-test.metta` | 15 / 15 | PASS |
-| `tests/candidate-test.metta` | 17 / 17 | PASS |
-| `tests/canonicalize-test.metta` | 7 / 7 | PASS |
+| `tests/bias-test.metta` | 20 / 20 | PASS |
+| `tests/candidate-test.metta` | 19 / 19 | PASS |
+| `tests/canonicalize-test.metta` | 19 / 19 | PASS |
 | `tests/deep-search-test.metta` | 19 / 19 | PASS |
+| `tests/dynamic-depth-test.metta` | 26 / 26 | PASS |
+| `tests/anti-monotonicity-test.metta` | 12 / 12 | PASS |
+| `tests/lifecycle-counting-test.metta` | 14 / 14 | PASS |
+| `tests/search-loop-generic-test.metta` | 13 / 13 | PASS |
 | `tests/empty-domain-test.metta` | 3 / 3 | PASS |
 | `tests/empty-level-test.metta` | 8 / 8 | PASS |
 | `tests/family-test.metta` | 12 / 12 | PASS |
