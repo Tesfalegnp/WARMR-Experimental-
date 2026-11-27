@@ -61,7 +61,7 @@
      (- (key_domain_pending_count))))
 
 ;; -----------------------------------------------------------------------------
-;; STAGE 310–311: Milestone 1 PoC Backward Compatibility
+;; STAGE 310–311: Milestone 1 PoC(Proof of Concept) Backward Compatibility
 ;; -----------------------------------------------------------------------------
 ;; Matches legacy candidate syntax: (candidate <qid> 1 (<pred> <arg1> <arg2>))
 (exec (warmr 310 eval_poc_var)
